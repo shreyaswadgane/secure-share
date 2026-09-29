@@ -43,7 +43,7 @@
 |---|---|---|
 | **Frontend** | HTML5, CSS3, Vanilla JS | Clean responsive dark/blue theme, Fetch API, XMLHttpRequest |
 | **Backend** | Python 3.10+, Flask 3.x | Lightweight, modular WSGI application |
-| **Database** | SQLite via Flask-SQLAlchemy | Portable relational models; switchable to MySQL / PostgreSQL |
+| **Database** | MySQL/POSTGRESQL| Portable relational models|
 | **Cryptography** | `cryptography` (Fernet) | AES-128-CBC + HMAC-SHA256 envelope encryption |
 | **Security** | Werkzeug Security, python-dotenv | Scrypt/PBKDF2 hashing, secure cookies, environment secrets |
 
