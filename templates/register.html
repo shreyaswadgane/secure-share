@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Register - Secure Share{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+  <div class="auth-card">
+    <div class="auth-header">
+      <div style="font-size: 2.25rem; margin-bottom: 0.5rem;">🛡️</div>
+      <h2 class="auth-title">Create Account</h2>
+      <p class="auth-subtitle">Join Secure Share with end-to-end encryption</p>
+    </div>
+
+    <form id="register-form">
+      <div class="form-group">
+        <label class="form-label" for="register-name">Full Name</label>
+        <input type="text" id="register-name" class="form-control" placeholder="Alice Johnson" required minlength="2">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="register-email">Email Address</label>
+        <input type="email" id="register-email" class="form-control" placeholder="alice@example.com" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="register-password">Password</label>
+        <input type="password" id="register-password" class="form-control" placeholder="At least 6 characters" required minlength="6">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="register-confirm-password">Confirm Password</label>
+        <input type="password" id="register-confirm-password" class="form-control" placeholder="Repeat your password" required minlength="6">
+      </div>
+
+      <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;">
+        Create Account
+      </button>
+    </form>
+
+    <div class="auth-footer">
+      Already have an account? <a href="/login">Log in here</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/auth.js') }}"></script>
+{% endblock %}

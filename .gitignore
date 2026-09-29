@@ -1,0 +1,31 @@
+# Python cache & compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+*.pytest_cache/
+
+# Virtual Environments
+venv/
+env/
+ENV/
+.venv/
+
+# Environment files with private keys (never commit secrets to GitHub)
+.env
+
+# Local SQLite databases & instance folder
+*.db
+instance/
+test_uploads/
+
+# User uploads (keep directory with .gitkeep, do not commit uploaded files)
+uploads/*
+!uploads/.gitkeep
+
+# Operating system files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Zip archives
+*.zip

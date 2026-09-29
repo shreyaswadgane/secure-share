@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Secure Share{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1 class="page-title">Welcome back, {{ user.name }}!</h1>
+    <p class="page-subtitle">Here is a summary of your encrypted shares and security activity.</p>
+  </div>
+  <div style="display: flex; gap: 0.75rem;">
+    <a href="/upload" class="btn btn-primary">➕ Share New File</a>
+  </div>
+</div>
+
+<!-- Stats Grid -->
+<div class="stats-grid">
+  <div class="stat-card">
+    <div class="stat-icon blue">📤</div>
+    <div>
+      <div class="stat-val" id="stat-sent">0</div>
+      <div class="stat-label">Files Sent</div>
+    </div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-icon green">📥</div>
+    <div>
+      <div class="stat-val" id="stat-received">0</div>
+      <div class="stat-label">Files Received</div>
+    </div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-icon purple">🔗</div>
+    <div>
+      <div class="stat-val" id="stat-active">0</div>
+      <div class="stat-label">Active Shares</div>
+    </div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-icon amber">💾</div>
+    <div>
+      <div class="stat-val" id="stat-storage">0 Bytes</div>
+      <div class="stat-label">Encrypted Storage</div>
+    </div>
+  </div>
+</div>
+
+<!-- Quick Actions & Recent Activity -->
+<div class="card">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+    <h2 class="card-title" style="margin-bottom: 0;">📜 Recent Security Activity Log</h2>
+    <div style="display: flex; gap: 0.5rem;">
+      <a href="/sent" class="btn btn-secondary btn-sm">View Sent Files</a>
+      <a href="/received" class="btn btn-secondary btn-sm">View Received Files</a>
+    </div>
+  </div>
+
+  <div id="activity-empty" style="display: none; text-align: center; padding: 2.5rem; color: var(--text-muted);">
+    No recent activity recorded yet. Start by <a href="/upload">sharing a file</a>!
+  </div>
+
+  <div class="table-responsive">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Action</th>
+          <th>Target File</th>
+          <th>Details</th>
+          <th>Timestamp</th>
+        </tr>
+      </thead>
+      <tbody id="activity-table-body">
+        <tr>
+          <td colspan="4" style="text-align: center; color: var(--text-muted); padding: 2rem;">Loading activity records...</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

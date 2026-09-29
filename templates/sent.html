@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Sent Files - Secure Share{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1 class="page-title">Sent Files</h1>
+    <p class="page-subtitle">Track, manage, and revoke access to encrypted files you have shared with other users.</p>
+  </div>
+  <div>
+    <a href="/upload" class="btn btn-primary">➕ Share New File</a>
+  </div>
+</div>
+
+<div class="card">
+  <div id="sent-empty" style="display: none; text-align: center; padding: 3rem 1rem; color: var(--text-muted);">
+    <div style="font-size: 2.5rem; margin-bottom: 0.75rem;">📤</div>
+    <h3 style="color: var(--text-main); margin-bottom: 0.5rem;">No files sent yet</h3>
+    <p style="margin-bottom: 1.25rem;">You haven't shared any files with other users yet.</p>
+    <a href="/upload" class="btn btn-primary btn-sm">Encrypt & Share a File</a>
+  </div>
+
+  <div class="table-responsive">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>File</th>
+          <th>Shared With</th>
+          <th>Expires At</th>
+          <th>Downloads</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="sent-table-body">
+        <tr>
+          <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 2.5rem;">
+            Loading sent files...
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/sent.js') }}"></script>
+{% endblock %}

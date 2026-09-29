@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block title %}Upload & Share File - Secure Share{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1 class="page-title">Encrypt & Share File</h1>
+    <p class="page-subtitle">Your file will be encrypted locally before being stored securely on the server.</p>
+  </div>
+</div>
+
+<div style="max-width: 760px; margin: 0 auto;">
+  <div class="card">
+    <form id="upload-form">
+      <!-- Drag & Drop Zone -->
+      <div id="upload-dropzone" class="upload-dropzone">
+        <div class="dropzone-icon">📁</div>
+        <div class="dropzone-title">Click to browse or drag and drop your file here</div>
+        <div class="dropzone-desc">Supports PDF, DOCX, ZIP, images, code files, and media up to 25 MB</div>
+      </div>
+      <input type="file" id="file-input" style="display: none;">
+
+      <!-- Selected File Preview -->
+      <div id="file-preview" class="file-preview" style="display: none;">
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <span style="font-size: 1.5rem;">📄</span>
+          <div>
+            <div id="preview-name" style="font-weight: 600; color: var(--text-main);">filename.pdf</div>
+            <div id="preview-size" style="font-size: 0.82rem; color: var(--text-muted);">1.2 MB</div>
+          </div>
+        </div>
+        <button type="button" id="remove-file-btn" class="btn btn-secondary btn-sm" style="color: #f87171;">Remove</button>
+      </div>
+
+      <!-- Recipient Input with Autocomplete -->
+      <div class="form-group" style="margin-top: 1.5rem; position: relative;">
+        <label class="form-label" for="recipient-input">Recipient (Email or Username) *</label>
+        <input type="text" id="recipient-input" class="form-control" placeholder="Type name or email of registered user..." required autocomplete="off">
+        <div id="recipient-suggestions" style="position: absolute; top: 100%; left: 0; right: 0; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); box-shadow: var(--shadow-md); z-index: 50; display: none; max-height: 200px; overflow-y: auto;"></div>
+        <div class="form-hint">The file will only be decryptable by this user account.</div>
+      </div>
+
+      <!-- Security Settings Grid -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem; margin-top: 1rem;">
+        <!-- Share Expiration -->
+        <div class="form-group">
+          <label class="form-label" for="expiry-select">Expiration Window</label>
+          <select id="expiry-select" class="form-control">
+            <option value="24h" selected>24 Hours</option>
+            <option value="1h">1 Hour</option>
+            <option value="7d">7 Days</option>
+            <option value="30d">30 Days</option>
+            <option value="never">Never Expires</option>
+          </select>
+        </div>
+
+        <!-- Download Quota -->
+        <div class="form-group">
+          <label class="form-label" for="max-downloads-select">Download Quota</label>
+          <select id="max-downloads-select" class="form-control">
+            <option value="unlimited" selected>Unlimited Downloads</option>
+            <option value="1">1 Time (One-Time Self-Destruct)</option>
+            <option value="5">5 Times</option>
+            <option value="10">10 Times</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Optional File Password -->
+      <div class="form-group">
+        <label class="form-label" for="file-password-input">Optional File Password (Secondary Protection)</label>
+        <input type="password" id="file-password-input" class="form-control" placeholder="Leave empty for no password...">
+        <div class="form-hint">If set, the recipient must enter this passphrase before downloading.</div>
+      </div>
+
+      <!-- Upload Progress Container -->
+      <div id="upload-progress-container" class="progress-container">
+        <div class="progress-bar-bg">
+          <div id="progress-bar-fill" class="progress-bar-fill"></div>
+        </div>
+        <div class="progress-text">
+          <span id="progress-status">Encrypting & Uploading...</span>
+          <span id="progress-percentage">0%</span>
+        </div>
+      </div>
+
+      <!-- Action Button -->
+      <div style="margin-top: 1.75rem;">
+        <button type="submit" id="upload-submit-btn" class="btn btn-primary" style="width: 100%;">
+          🔒 Encrypt & Share File
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Security Note -->
+  <div style="margin-top: 1.5rem; padding: 1rem 1.25rem; background: rgba(37, 99, 235, 0.08); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: var(--radius-md); font-size: 0.85rem; color: var(--text-muted);">
+    <strong style="color: var(--accent-cyan);">🔐 Security Architecture Note:</strong>
+    Before writing this file to server storage, a random 256-bit symmetric AES key (DEK) will be generated. The file is encrypted with Fernet, saved under an unpredictable UUID name, and the DEK is encrypted using the master key.
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/upload.js') }}"></script>
+{% endblock %}

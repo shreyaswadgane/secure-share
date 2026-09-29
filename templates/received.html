@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}Received Files - Secure Share{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1 class="page-title">Received Files</h1>
+    <p class="page-subtitle">Encrypted files shared with you by other users. Downloaded files are decrypted on-the-fly.</p>
+  </div>
+</div>
+
+<div class="card">
+  <div id="received-empty" style="display: none; text-align: center; padding: 3rem 1rem; color: var(--text-muted);">
+    <div style="font-size: 2.5rem; margin-bottom: 0.75rem;">📥</div>
+    <h3 style="color: var(--text-main); margin-bottom: 0.5rem;">No files received yet</h3>
+    <p>When another user shares an encrypted file with your email address, it will appear here.</p>
+  </div>
+
+  <div class="table-responsive">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>File</th>
+          <th>Sender</th>
+          <th>Expires At</th>
+          <th>Downloads</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="received-table-body">
+        <tr>
+          <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 2.5rem;">
+            Loading received files...
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Password Prompt Modal for Protected Shares -->
+<div id="password-modal" class="modal-overlay">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 class="modal-title">🔒 Password Required</h3>
+      <button class="modal-close" onclick="closeModal('password-modal')">&times;</button>
+    </div>
+
+    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.25rem;">
+      The sender has protected this file with a password. Please enter the passphrase to decrypt and download the file.
+    </p>
+
+    <form id="password-prompt-form">
+      <div class="form-group">
+        <label class="form-label" for="modal-share-password">File Password</label>
+        <input type="password" id="modal-share-password" class="form-control" placeholder="Enter file password..." required autofocus>
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('password-modal')">Cancel</button>
+        <button type="submit" class="btn btn-primary">Decrypt & Download</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/received.js') }}"></script>
+{% endblock %}

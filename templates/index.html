@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}Secure Share - End-to-End Encrypted File Sharing{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <div class="hero-pill">
+    <span>🛡️ Project: Secure File Sharing System</span>
+  </div>
+  <h1 class="hero-title">Protect Your Files With Military-Grade Cryptography</h1>
+  <p class="hero-subtitle">
+    Share confidential files seamlessly between registered users. Every file is encrypted using Fernet (AES-128 in CBC mode with HMAC-SHA256 authentication) before touching disk storage.
+  </p>
+  <div class="hero-buttons">
+    {% if user %}
+      <a href="/upload" class="btn btn-primary">Share a File Now</a>
+      <a href="/dashboard" class="btn btn-secondary">Open Dashboard</a>
+    {% else %}
+      <a href="/register" class="btn btn-primary">Create Free Account</a>
+      <a href="/login" class="btn btn-secondary">Existing User Login</a>
+    {% endif %}
+  </div>
+</section>
+
+<!-- Feature Showcase -->
+<div class="features-grid">
+  <div class="feature-box">
+    <div class="feature-icon">🔐</div>
+    <h3 class="feature-title">Envelope Encryption</h3>
+    <p class="feature-desc">
+      Each file receives an ephemeral 256-bit Fernet key (DEK) that is encrypted with the master key (KEK). File contents are never stored in plaintext on disk or in the database.
+    </p>
+  </div>
+
+  <div class="feature-box">
+    <div class="feature-icon">👥</div>
+    <h3 class="feature-title">Targeted Peer Sharing</h3>
+    <p class="feature-desc">
+      Specify authorized recipients by email or username. Only the intended recipient can access and trigger on-the-fly decryption of the shared payload.
+    </p>
+  </div>
+
+  <div class="feature-box">
+    <div class="feature-icon">⏳</div>
+    <h3 class="feature-title">Self-Expiring Shares</h3>
+    <p class="feature-desc">
+      Set customizable expiration windows (1 hour, 24 hours, 7 days, 30 days) to prevent permanent access to sensitive data.
+    </p>
+  </div>
+
+  <div class="feature-box">
+    <div class="feature-icon">🔢</div>
+    <h3 class="feature-title">Download Quotas</h3>
+    <p class="feature-desc">
+      Enforce one-time downloads or strict quotas. Once the download quota is fulfilled, the link is permanently locked.
+    </p>
+  </div>
+
+  <div class="feature-box">
+    <div class="feature-icon">🔑</div>
+    <h3 class="feature-title">Secondary Password Lock</h3>
+    <p class="feature-desc">
+      Add an extra layer of protection by attaching a secret passphrase to your file share that the receiver must provide before downloading.
+    </p>
+  </div>
+
+  <div class="feature-box">
+    <div class="feature-icon">📜</div>
+    <h3 class="feature-title">Tamper-Proof Audit Trail</h3>
+    <p class="feature-desc">
+      Track who uploaded, downloaded, or revoked files with timestamps and IP activity logging for accountability.
+    </p>
+  </div>
+</div>
+
+<!-- Architecture & Viva Highlights -->
+<div class="card" style="margin-top: 3.5rem; background: rgba(30, 41, 59, 0.4);">
+  <h3 class="card-title">🔬 Cryptographic Pipeline Overview (Project Viva Reference)</h3>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1rem; font-size: 0.92rem; color: var(--text-muted);">
+    <div>
+      <strong style="color: var(--text-main); display: block; margin-bottom: 0.35rem;">1. Upload & DEK Generation</strong>
+      When a user uploads a file, the server generates a cryptographically secure random Data Encryption Key (DEK) via <code>Fernet.generate_key()</code>.
+    </div>
+    <div>
+      <strong style="color: var(--text-main); display: block; margin-bottom: 0.35rem;">2. AES-128 Encryption & UUID</strong>
+      The file bytes are encrypted in memory. The ciphertext is saved to disk under a non-guessable UUID filename (e.g., <code>9e2b4...enc</code>).
+    </div>
+    <div>
+      <strong style="color: var(--text-main); display: block; margin-bottom: 0.35rem;">3. Master Key Envelope</strong>
+      The DEK is encrypted with the <code>MASTER_ENCRYPTION_KEY</code> from <code>.env</code> and saved into the database's <code>encryption_key_ref</code> column.
+    </div>
+    <div>
+      <strong style="color: var(--text-main); display: block; margin-bottom: 0.35rem;">4. On-the-Fly Decryption</strong>
+      Upon authorized download request, the DEK is decrypted, ciphertext is read, decrypted in RAM, and streamed directly without ever writing plaintext to disk.
+    </div>
+  </div>
+</div>
+{% endblock %}

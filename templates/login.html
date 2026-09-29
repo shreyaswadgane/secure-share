@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Log In - Secure Share{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+  <div class="auth-card">
+    <div class="auth-header">
+      <div style="font-size: 2.25rem; margin-bottom: 0.5rem;">🔒</div>
+      <h2 class="auth-title">Welcome Back</h2>
+      <p class="auth-subtitle">Log in to your encrypted workspace</p>
+    </div>
+
+    <form id="login-form">
+      <div class="form-group">
+        <label class="form-label" for="login-email">Email Address</label>
+        <input type="email" id="login-email" class="form-control" placeholder="user@example.com" required autocomplete="email">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="login-password">Password</label>
+        <input type="password" id="login-password" class="form-control" placeholder="••••••••" required autocomplete="current-password">
+      </div>
+
+      <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;">
+        Log In
+      </button>
+    </form>
+
+    <div class="auth-footer">
+      Don't have an account? <a href="/register">Register here</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/auth.js') }}"></script>
+{% endblock %}

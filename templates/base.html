@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Secure Share - Secure File Sharing System{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="/" class="brand-logo">
+        <div class="brand-icon">🔒</div>
+        <span>Secure Share</span>
+      </a>
+
+      <div class="nav-links">
+        {% if user %}
+          <a href="/dashboard" class="{% if request.path == '/dashboard' %}active{% endif %}">Dashboard</a>
+          <a href="/upload" class="{% if request.path == '/upload' %}active{% endif %}">Upload & Share</a>
+          <a href="/sent" class="{% if request.path == '/sent' %}active{% endif %}">Sent Files</a>
+          <a href="/received" class="{% if request.path == '/received' %}active{% endif %}">Received Files</a>
+        {% else %}
+          <a href="/" class="{% if request.path == '/' %}active{% endif %}">Home</a>
+          <a href="/login" class="{% if request.path == '/login' %}active{% endif %}">Log In</a>
+          <a href="/register" class="btn btn-primary btn-sm">Get Started</a>
+        {% endif %}
+      </div>
+
+      {% if user %}
+        <div class="nav-user">
+          <div class="user-badge">
+            <span class="status-dot"></span>
+            <span>{{ user.name }}</span>
+          </div>
+          <button id="logout-btn" class="btn btn-secondary btn-sm">Log Out</button>
+        </div>
+      {% endif %}
+    </div>
+  </nav>
+
+  <!-- Main Body Content -->
+  <main class="main-wrapper">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Global Footer -->
+  <footer class="footer">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+      <div>
+        <strong>Secure Share</strong> &mdash; Academic Project: Secure File Sharing System
+      </div>
+      <div>
+        Built with Flask &bull; Fernet AES Encryption &bull; SQLite ORM
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Global Scripts -->
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>
